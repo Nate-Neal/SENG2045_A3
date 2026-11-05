@@ -1,2 +1,0 @@
-#THis is required to run the 
-Django==5.2.19
