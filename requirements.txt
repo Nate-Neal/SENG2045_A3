@@ -1,2 +1,8 @@
 #This is required to run the django project
+asgiref==3.13.0
+crispy-bootstrap5==2026.9
 Django==5.2.19
+django-crispy-forms==2.7
+pillow==13.0.0
+sqlparse==0.6.1
+tzdata==2026.6
