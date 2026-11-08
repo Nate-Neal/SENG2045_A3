@@ -15,6 +15,23 @@ posts
         {{ obj.title }} - {{ obj.body }} <br>
     {% endfor %}
 {% endcomment %}
+
+{% comment %} Spinner reference: https://getbootstrap.com/docs/6.0/components/spinner/ {% endcomment %}
+    <div id ="spinner-box">
+        <div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading…</span>
+</div>
+
+<span class="badge theme-primary">
+  <span class="spinner-border" aria-hidden="true"></span>
+  <span role="status">Loading</span>
+</span>
+
+<button class="btn-subtle theme-primary" type="button" disabled>
+  <span class="spinner-border" aria-hidden="true"></span>
+  <span role="status">Loading…</span>
+</button>
+    </div>
     <div id ="posts-box"></div>
     <div id ="nate"></div>
 
