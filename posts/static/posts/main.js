@@ -1,24 +1,16 @@
 console.log("Nathanael");
 
-const helloWorldBox = document.getElementById("nate");
+
 const postsBox = document.getElementById("posts-box");
 const spinnerBox = document.getElementById("spinner-box");
+const loadBtn = document.getElementById("load-more");
+const endBox = document.getElementById("end-box");
+let visible = 3
 
-$.ajax({
+const getdata = () => {
+  $.ajax({
   type: "GET",
-  url: "/hello-world/",
-  success: function (response) {
-    console.log("success", response.text);
-    helloWorldBox.innerHTML = response.text;
-  },
-  error: function (error) {
-    console.log("error", error);
-  },
-});
-
-$.ajax({
-  type: "GET",
-  url: "/load-posts/",
+  url: `/load-posts/${visible}/`,
   success: function (response) {
     console.log(response);
     const data = response.data;
@@ -46,9 +38,30 @@ $.ajax({
                 </div>
           `
       });
-    }, 100);
+    }, 100)
+    console.log(response.size)
+    if (response.size == 0) {
+      endBox.textContent = "No posts added yet...";
+    }
+    else if (response.size <= visible) {
+      loadBtn.classList.add("not-visible");
+      endBox.textContent = "No more posts to load...";
+    }
   },
   error: function (error) {
     console.log("error", error);
   },
 });
+}
+
+const loadMBtn = document.getElementById("load-more");
+loadBtn.addEventListener("click", () => {
+    spinnerBox.classList.remove("not-visible");
+    visible += 3;
+    getdata();
+
+})
+
+ getdata();
+
+

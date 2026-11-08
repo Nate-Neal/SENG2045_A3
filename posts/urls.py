@@ -5,5 +5,5 @@ app_name = 'posts'
 urlpatterns = [
     path('', post_list, name='main-board'),
     path('hello-world/',hello_world_view, name='hello-world'),
-    path('load-posts/', load_posts, name='load-posts'),
+    path('load-posts/<int:num_posts>/', load_posts, name='load-posts'),
 ]
