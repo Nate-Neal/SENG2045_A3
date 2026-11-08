@@ -25,6 +25,7 @@ def load_posts(request, num_posts):
             'title': obj.title,
             'body': obj.body,
             'liked': True if request.user in obj.liked.all() else False,
+            'count': obj.likes_count,
             'author': obj.author.username,
         }
         data.append(item)
