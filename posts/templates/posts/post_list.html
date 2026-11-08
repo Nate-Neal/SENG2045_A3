@@ -10,8 +10,12 @@ posts
 {% endblock title %}
 
 {% block content %}
+   {% comment %}
     {% for obj in qs %}
         {{ obj.title }} - {{ obj.body }} <br>
     {% endfor %}
+{% endcomment %}
+    <div id ="posts-box"></div>
     <div id ="nate"></div>
+
 {% endblock content %}
