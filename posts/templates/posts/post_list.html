@@ -1,36 +1,59 @@
 
 {% extends "base.html" %}
 {% load static %}
+
 {% block scripts %}
-    <script src="{% static 'posts/main.js' %}"defer></script>
+    <script src="{% static 'posts/main.js' %}" defer></script>
 {% endblock scripts %}
 
 {% block title %}
-posts
+    posts
 {% endblock title %}
 
 {% block content %}
-   {% comment %}
-    {% for obj in qs %}
-        {{ obj.title }} - {{ obj.body }} <br>
-    {% endfor %}
-{% endcomment %}
 
+    {% comment %}
+    Modal reference: https://getbootstrap.com/docs/6.0/components/modal/
+    {% endcomment %}
 
-{% comment %}
-Spinner reference: https://getbootstrap.com/docs/5.3/components/spinners/
-{% endcomment %}
-
-<div id="spinner-box" class="text-center my-3">
-    <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <!-- Modal -->
+    <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">+ add</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div id="posts-box"></div>
-<div class="text-center mb-3" id="end-box">
-    <button class="btn btn-primary" id="load-more" type="button">
-        Load More
+    
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-info mb-2" data-bs-toggle="modal" data-bs-target="#addPostModal">
+        add post
     </button>
-</div>
+    {% comment %}
+    Spinner reference: https://getbootstrap.com/docs/5.3/components/spinners/
+    {% endcomment %}
+    <div id="spinner-box" class="text-center my-3">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div id="posts-box"></div>
+
+    <div class="text-center mb-3" id="end-box">
+        <button class="btn btn-primary" id="load-more" type="button">
+            Load More
+        </button>
+    </div>
 {% endblock content %}
 
