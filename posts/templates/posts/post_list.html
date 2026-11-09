@@ -5,6 +5,7 @@
 
 {% block scripts %}
     <script src="{% static 'posts/main.js' %}" defer></script>
+    <script src="{% static 'posts/functions.js' %}" defer></script>
 {% endblock scripts %}
 
 {% block title %}
@@ -38,7 +39,7 @@
             </div>
         </div>
     </div>
-
+    <div id="alert-box"></div>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-info mb-2" data-bs-toggle="modal" data-bs-target="#addPostModal">
         add post

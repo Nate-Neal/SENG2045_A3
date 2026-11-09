@@ -1,3 +1,4 @@
+
 from django import forms
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -11,40 +12,55 @@ from profiles.models import Profile
 def home(request):
     return render(request, 'posts/home.html')
 
+
 def post_list(request):
     form = PostForm(request.POST or None)
-    # qs = Post.objects.all()
-
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        if forms.is_valid():
-            author = Profile.objects.get(user=request.user)
+        if form.is_valid():
             instance = form.save(commit=False)
-            instance.author = author
+            instance.author = request.user
             instance.save()
+            return JsonResponse({
+                'title': instance.title,
+                'body': instance.body,
+                'author': instance.author.username,
+                'id': instance.id,
+
+            })
     context = {
         'form': form,
     }
     return render(request, 'posts/post_list.html', context)
 
 def load_posts(request, num_posts):
-    visible = 3
-    upper = num_posts
-    lower = upper - visible
-    size = Post.objects.all().count()
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        visible = 3
+        upper = num_posts
+        lower = max(upper - visible, 0)
+        size = Post.objects.all().count()
 
-    qs = Post.objects.all()[:num_posts]
-    data = []
-    for obj in qs:
-        item = {
-            'id': obj.id,
-            'title': obj.title,
-            'body': obj.body,
-            'liked': True if request.user in obj.liked.all() else False,
-            'count': obj.likes_count,
-            'author': obj.author.username,
-        }
-        data.append(item)
-    return JsonResponse({'data': data[lower:upper], 'size': size})
+        qs = Post.objects.all().order_by('-created', '-id')[lower:upper]
+        data = []
+
+        for obj in qs:
+            item = {
+                'id': obj.id,
+                'title': obj.title,
+                'body': obj.body,
+                'liked': request.user in obj.liked.all(),
+                'count': obj.liked.count(),
+                'author': obj.author.username,
+            }
+            data.append(item)
+
+        return JsonResponse({
+            'data': data,
+            'size': size
+        })
+
+    return JsonResponse({
+        'error': 'AJAX request required'
+    }, status=400)
 
 @login_required
 @require_POST
