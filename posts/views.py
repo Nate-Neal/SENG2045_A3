@@ -67,11 +67,21 @@ def load_posts(request, num_posts):
         return JsonResponse({
             'data': data,
             'size': size
-        })
-
+        })    
     return JsonResponse({
         'error': 'AJAX request required'
     }, status=400)
+
+def post_detail_data_view(request, pk):  
+    obj = Post.objects.get(pk=pk)
+    data = {
+        'id': obj.id,
+        'title': obj.title,
+        'body': obj.body,
+        'author': obj.author.username,
+        'logged-in': request.user.username,
+    }
+    return JsonResponse({'data': data})
 
 @login_required
 @require_POST
