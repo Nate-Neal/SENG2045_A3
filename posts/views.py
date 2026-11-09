@@ -1,17 +1,30 @@
-from django.contrib.postgres import serializers
+from django import forms
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import Post
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from .forms import PostForm
+from profiles.models import Profile
 
 def home(request):
     return render(request, 'posts/home.html')
 
 def post_list(request):
-    qs = Post.objects.all()
-    return render(request, 'posts/post_list.html', {'qs': qs})
+    form = PostForm(request.POST or None)
+    # qs = Post.objects.all()
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if forms.is_valid():
+            author = Profile.objects.get(user=request.user)
+            instance = form.save(commit=False)
+            instance.author = author
+            instance.save()
+    context = {
+        'form': form,
+    }
+    return render(request, 'posts/post_list.html', context)
 
 def load_posts(request, num_posts):
     visible = 3
