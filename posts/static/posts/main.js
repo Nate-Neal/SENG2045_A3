@@ -12,6 +12,7 @@ const title = document.getElementById("id_title");
 const body = document.getElementById("id_body");
 const modalElement = document.getElementById('addPostModal');
 const csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+const url = window.location.href
 const alertBox = document.getElementById('alert-box')
 console.log('csrf:', csrf);
 
@@ -90,7 +91,7 @@ const getdata = () => {
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-2">
-                                        <a href="#" class="btn btn-primary">Details</a>
+                                        <a href="/${el.id}" class="btn btn-primary">Details</a>
                                     </div>
                                     <div class="col-2">
                                         <form class="like-form" data-post-form="${el.id}">
@@ -153,7 +154,7 @@ postForm.addEventListener("submit", (e) => {
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-2">
-                                <a href="#" class="btn btn-primary">Details</a>
+                                <a href="/${response.id}" class="btn btn-primary">Details</a>
                             </div>
                             <div class="col-2">
                                 <form class="like-form" data-post-form="${response.id}">
@@ -172,7 +173,7 @@ postForm.addEventListener("submit", (e) => {
 
             handleAlerts('success', 'New post added!');
             bootstrap.Modal.getOrCreateInstance(modalElement).hide();
-            likeUnlikePosts();
+            postForm.reset()
         },
         error: function (error) {
             console.log(error);

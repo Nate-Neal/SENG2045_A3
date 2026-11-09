@@ -32,6 +32,17 @@ def post_list(request):
     }
     return render(request, 'posts/post_list.html', context)
 
+def post_detail(request, pk):
+    obj = Post.objects.get(pk=pk)
+    form = PostForm()
+
+    context = {
+        'obj': obj,
+        'form': form,
+    }
+
+    return render(request, 'posts/detail.html', {'obj': obj})
+
 def load_posts(request, num_posts):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         visible = 3
