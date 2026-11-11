@@ -5,7 +5,7 @@ const updateBtn = document.getElementById('update-btn')
 const deleteBtn = document.getElementById('delete-btn')
 const url = `${window.location.pathname.replace(/\/$/, '')}/data/`;
 const spinnerBox = document.getElementById('spinner-box')
-
+const postBox = document.getElementById('post-box')
 
 backBtn.addEventListener('click', ()=>{
     history.back()
@@ -30,6 +30,17 @@ $.ajax({
             updateBtn.classList.remove('not-visible')
             deleteBtn.classList.remove('not-visible')
         }
+        const titleEL = document.createElement('h3')
+        titleEL.setAttribute('class', 'mt-3')
+
+        const bodyEL = document.createElement('p')
+        bodyEL.setAttribute('class', 'mt-1')
+
+        titleEL.textContent = data.title
+        bodyEL.textContent = data.body
+
+        postBox.appendChild(titleEL)
+        postBox.appendChild(bodyEL)
         spinnerBox.classList.add('not-visible')
     },
     error: function(error){
