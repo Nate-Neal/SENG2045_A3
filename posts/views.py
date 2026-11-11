@@ -34,14 +34,14 @@ def post_list(request):
 
 def post_detail(request, pk):
     obj = Post.objects.get(pk=pk)
-    form = PostForm()
+    form = PostForm(instance=obj)
 
     context = {
         'obj': obj,
         'form': form,
     }
 
-    return render(request, 'posts/detail.html', {'obj': obj})
+    return render(request, 'posts/detail.html', context)
 
 def load_posts(request, num_posts):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
