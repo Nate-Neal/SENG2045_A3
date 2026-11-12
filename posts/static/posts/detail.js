@@ -14,6 +14,7 @@ const csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 const titleInput = document.getElementById('id_title');
 const bodyInput = document.getElementById('id_body');
 const alertBox = document.getElementById('alert-box')
+console.log(window.location)
 
 backBtn.addEventListener('click', ()=>{
     history.back()
@@ -63,8 +64,6 @@ $.ajax({
 updateForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const titleInput = document.getElementById('id_title');
-    const bodyInput = document.getElementById('id_body');
     const csrf = updateForm.querySelector('[name="csrfmiddlewaretoken"]').value;
 
     $.ajax({
@@ -86,3 +85,26 @@ updateForm.addEventListener('submit', (e) => {
         }
     });
 });
+
+
+deleteForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const csrf = deleteForm.querySelector('[name="csrfmiddlewaretoken"]').value;
+    $.ajax({
+        type: 'POST',
+        url: deleteUrl,
+        data: {
+            'csrfmiddlewaretoken': csrf,
+        },
+        success: function(response) {
+            console.log(response);
+            localStorage.setItem('title', titleInput.value);
+            window.location.href = '/';
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+});
+

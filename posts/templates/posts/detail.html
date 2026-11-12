@@ -3,8 +3,9 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block scripts %}
-   <script src="{% static 'posts/detail.js' %}" defer></script>
-   <script src="{% static 'posts/functions.js' %}" defer></script>
+   
+    <script src="{% static 'posts/functions.js' %}" defer></script>
+    <script src="{% static 'posts/detail.js' %}" defer></script>
 
 {% endblock scripts %}
     
@@ -52,7 +53,7 @@
                     Are you sure you want to delete<b>"{{obj.title}}"</b> ?
                 </div>
                 <div class="modal-footer">
-                    <form id="delete-form">
+                    <form id="delete-form" method="post">
                         {% csrf_token %}
 
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

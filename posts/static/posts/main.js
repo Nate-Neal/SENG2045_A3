@@ -34,6 +34,11 @@ const getCookie = (name) => {
 }
 
 const csrftoken = getCookie('csrftoken');
+const deleted = localStorage.getItem('title')
+if (deleted) {
+    handleAlerts('danger', `Deleted "${deleted}"`);
+    localStorage.removeItem('title');
+}
 const likUnlikeForms = [...document.getElementsByClassName("like-form")];
 
 postsBox.addEventListener("submit", (e) => {

@@ -100,8 +100,10 @@ def like_unlike_post(request, pk):
         'count': obj.liked.count()
     })
 
+@login_required
+@require_POST
 def update_post(request, pk):
-    obj = Post.objects.get(pk=pk)
+    obj = get_object_or_404(Post, pk=pk, author=request.user)
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         new_title = request.POST.get('title')
         new_body = request.POST.get('body')
@@ -113,8 +115,12 @@ def update_post(request, pk):
             'body': new_body,
         })
 
+@login_required
+@require_POST
 def delete_post(request, pk):
-    obj = Post.objects.get(pk=pk)
-    if request.is_ajax():
-        obj.delete()
-    return JsonResponse
+    obj = get_object_or_404(Post, pk=pk, author=request.user)
+
+    obj.delete()
+
+    return JsonResponse({'success': True})
+
