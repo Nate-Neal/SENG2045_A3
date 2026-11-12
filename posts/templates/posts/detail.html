@@ -66,7 +66,7 @@
 
     <!-- Carousel -->
     {% if obj.get_photos %}
-        <div id="carouselExampleControls" class="carousel slide mb-2" data-bs-ride="carousel">
+        <div id="carouselExampleControls" class="carousel slide mb-3" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for p in obj.get_photos %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
@@ -86,7 +86,7 @@
     {% else %}
         <div class="mt-2">No photos to show</div>
     {% endif %}
-    
+
     <button id='back-btn' class='btn btn-info'>back</button>
     <button id="update-btn" class="btn btn-primary not-visible" data-bs-toggle="modal" data-bs-target="#updatePostModal">update</button>
     <button id="delete-btn" class="btn btn-danger not-visible" data-bs-toggle="modal" data-bs-target="#deletePostModal">delete</button>
