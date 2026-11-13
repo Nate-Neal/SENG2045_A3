@@ -1,5 +1,3 @@
-
-
 console.log("Nathanael");
 
 const postsBox = document.getElementById("posts-box");
@@ -15,6 +13,9 @@ const csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 const url = window.location.href
 const alertBox = document.getElementById('alert-box')
 console.log('csrf:', csrf);
+const dropzone = document.getElementById('my-dropzone')
+const addBtn = document.getElementById('add-btn')
+const closeBtn = [...document.getElementsByClassName('add-modal-close')]
 
 // Reference: https://docs.djangoproject.com/en/6.1/howto/csrf/
 const getCookie = (name) => {
@@ -177,8 +178,8 @@ postForm.addEventListener("submit", (e) => {
             `)
 
             handleAlerts('success', 'New post added!');
-            bootstrap.Modal.getOrCreateInstance(modalElement).hide();
-            postForm.reset()
+            //bootstrap.Modal.getOrCreateInstance(modalElement).hide();
+            //postForm.reset() 
         },
         error: function (error) {
             console.log(error);
@@ -186,4 +187,9 @@ postForm.addEventListener("submit", (e) => {
         }
     });
 });
+
+addBtn.addEventListener('click', () => {
+    dropzone.classList.remove('not-visible');
+});
+
 getdata();
