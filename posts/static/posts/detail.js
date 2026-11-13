@@ -16,9 +16,9 @@ const bodyInput = document.getElementById('id_body');
 const alertBox = document.getElementById('alert-box')
 console.log(window.location)
 
-backBtn.addEventListener('click', ()=>{
-    history.back()
-})
+//backBtn.addEventListener('click', ()=>{
+    //history.back()
+//})
 
 $.ajax({
     type: 'GET',

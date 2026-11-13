@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+    <script src="{% static 'posts/functions.js' %}" defer></script>
+    <script src="{% static 'profiles/main.js' %}" defer></script>
+{% endblock scripts %}
+
+{% block title %}
+    my profiles
+{% endblock title %}
+
+{% block content %}
+    <h3>My Profiles</h3>
+{% endblock content %}
