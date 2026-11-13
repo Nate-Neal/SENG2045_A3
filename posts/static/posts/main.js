@@ -17,6 +17,7 @@ const dropzone = document.getElementById('my-dropzone')
 const addBtn = document.getElementById('add-btn')
 const closeBtn = [...document.getElementsByClassName('add-modal-close')]
 
+let newPostId = null;
 // Reference: https://docs.djangoproject.com/en/6.1/howto/csrf/
 const getCookie = (name) => {
     let cookieValue = null;
@@ -150,6 +151,8 @@ postForm.addEventListener("submit", (e) => {
         },
         success: function (response) {
             console.log(response);
+            newPostId = response.id;
+            console.log('New post ID:', newPostId);
 
             postsBox.insertAdjacentHTML('afterbegin', `
                 <div class="card mb-2">
@@ -191,5 +194,27 @@ postForm.addEventListener("submit", (e) => {
 addBtn.addEventListener('click', () => {
     dropzone.classList.remove('not-visible');
 });
+
+
+closeBtn.forEach(btn => btn.addEventListener('click', () => {
+    postForm.reset()
+    if (!dropzone.classList.contains('not-visible')) {
+        dropzone.classList.add('not-visible')
+    }
+}))
+
+Dropzone.autoDiscover = false
+const myDropzone = new Dropzone('#my-dropzone', {
+    url: 'upload/',
+    init: function() {
+        this.on('sending', function(file, xhr, formData) {
+            formData.append('csrfmiddlewaretoken', csrftoken)
+            formData.append('new_post_id', newPostId)
+        })
+    },
+    maxFiles: 5,
+    maxFilesize: 4,
+    acceptedFiles: '.png, .jpg, .jpeg'
+})
 
 getdata();
