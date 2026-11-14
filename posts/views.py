@@ -13,7 +13,7 @@ from .utils import action_permission
 def home(request):
     return render(request, 'posts/home.html')
 
-
+@login_required
 def post_list(request):
     form = PostForm(request.POST or None)
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -33,6 +33,7 @@ def post_list(request):
     }
     return render(request, 'posts/post_list.html', context)
 
+@login_required
 def post_detail(request, pk):
     obj = Post.objects.get(pk=pk)
     form = PostForm(instance=obj)
@@ -44,6 +45,7 @@ def post_detail(request, pk):
 
     return render(request, 'posts/detail.html', context)
 
+@login_required
 def load_posts(request, num_posts):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         visible = 3
@@ -73,6 +75,7 @@ def load_posts(request, num_posts):
         'error': 'AJAX request required'
     }, status=400)
 
+@login_required
 def post_detail_data_view(request, pk):  
     obj = Post.objects.get(pk=pk)
     data = {
@@ -103,6 +106,7 @@ def like_unlike_post(request, pk):
 
 @login_required
 @require_POST
+@action_permission
 def update_post(request, pk):
     obj = get_object_or_404(Post, pk=pk, author=request.user)
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -121,12 +125,12 @@ def update_post(request, pk):
 @action_permission
 def delete_post(request, pk):
     obj = get_object_or_404(Post, pk=pk, author=request.user)
-    
+
     obj.delete()
 
     return JsonResponse({'success': True})
 
-
+@login_required
 def image_upload_view(request):
     if request.method == 'POST':
         img = request.FILES.get('file')
