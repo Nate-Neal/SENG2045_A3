@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import PostForm
 from profiles.models import Profile
+from .utils import action_permission
 
 def home(request):
     return render(request, 'posts/home.html')
@@ -117,12 +118,14 @@ def update_post(request, pk):
 
 @login_required
 @require_POST
+@action_permission
 def delete_post(request, pk):
     obj = get_object_or_404(Post, pk=pk, author=request.user)
-
+    
     obj.delete()
 
     return JsonResponse({'success': True})
+
 
 def image_upload_view(request):
     if request.method == 'POST':
