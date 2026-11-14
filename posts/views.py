@@ -38,9 +38,12 @@ def post_detail(request, pk):
     obj = Post.objects.get(pk=pk)
     form = PostForm(instance=obj)
 
+    author_profile = Profile.objects.filter(user=obj.author).first()
+
     context = {
         'obj': obj,
         'form': form,
+        'author_profile': author_profile,
     }
 
     return render(request, 'posts/detail.html', context)

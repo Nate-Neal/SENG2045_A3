@@ -1,5 +1,3 @@
-console.log('Hello')
-
 const backBtn = document.getElementById('back-btn')
 const updateBtn = document.getElementById('update-btn')
 const deleteBtn = document.getElementById('delete-btn')
@@ -15,10 +13,6 @@ const titleInput = document.getElementById('id_title');
 const bodyInput = document.getElementById('id_body');
 const alertBox = document.getElementById('alert-box')
 console.log(window.location)
-
-//backBtn.addEventListener('click', ()=>{
-    //history.back()
-//})
 
 $.ajax({
     type: 'GET',
